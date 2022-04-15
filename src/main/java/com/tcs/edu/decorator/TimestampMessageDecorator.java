@@ -7,9 +7,11 @@ public class TimestampMessageDecorator {
 
     private static int messageCount;
 
+    private static final int PAGE_SIZE = 2;
+
     public static String decorator(String message){
 
-        if (++messageCount % 2 == 0 ) {
+        if (++messageCount % PAGE_SIZE == 0 ) {
             final String decoratedMessage = format("%d %s %s %n---",messageCount,  Instant.now().toString(), message);
             return decoratedMessage;
         }
