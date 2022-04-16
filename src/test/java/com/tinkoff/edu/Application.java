@@ -1,15 +1,16 @@
 package com.tinkoff.edu;
 
-import static com.tcs.edu.decorator.TimestampMessageDecorator.*;
-import static com.tcs.edu.printer.ConsolePrinter.print;
+import static com.tcs.edu.MessageService.*;
+import static com.tcs.edu.Severity.*;
 
 class Application {
     public static void main(String[] args) {
-        print(decorator("Hello world!"));
-        print(decorator("Hello world!"));
-        print(decorator("Hello world!"));
-        print(decorator("Hello world!"));
-        print(decorator("Hello world!"));
-        print(decorator("Hello world!"));
+
+        process(MINOR, "Hello world!");
+        process(MAJOR, "Hello world!");
+        process(REGULAR, "Hello world!");
+        process(MINOR, "Hello world!");
+        process(MAJOR, "Hello world!");
+        process(REGULAR, "Hello world!");
     }
 }
