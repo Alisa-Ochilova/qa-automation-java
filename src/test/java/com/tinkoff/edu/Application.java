@@ -5,7 +5,6 @@ import static com.tcs.edu.Severity.*;
 
 class Application {
     public static void main(String[] args) {
-
         process(MINOR, "Hello world!", "Hello world!");
         process(REGULAR, "Hello world!");
         process(MAJOR, "Hello world!");

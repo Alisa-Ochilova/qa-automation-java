@@ -170,7 +170,7 @@ Hello world!
 - [ ] В классе `Application` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.printer.ConsolePrinter`
 - [ ] Выполните из консоли запуск приложения
 ```shell
- java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.Application
+ java -classpath target/app-1.0-SNAPSHOT.jar com.tinkoff.edu.Application
 ```
 
 Как проверить
@@ -208,7 +208,7 @@ Hello World!
 Задачи
 ------
 - [ ] В sourcepath (src/main/java) cоздайте пакет com.tcs.edu.decorator
-- [ ] Создайте класс com.tcs.edu.decorator.TimestampMessageDecorator
+- [ ] Создайте класс TimestampMessageDecorator
 - [ ] Создайте статический метод decorate(String message), возвращающий String – обогащенную строку сообщения
 - [ ] В методе возвращайте склееную строку, состоящую из результата функции Instant.now() и входного параметра метода – строки сообщения
 - [ ] Импортируйте полное имя класса java.time.Instant 
@@ -245,7 +245,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте метод decorate() класса com.tcs.edu.decorator.TimestampMessageDecorator
+- [ ] В sourcepath (src/main/java) откройте метод decorate() класса TimestampMessageDecorator
 - [ ] Результат выражения склейки текущего времени и сообщения сохраняйте в переменную decoratedMessage типа String
 - [ ] Возвращайте из метода значение этой переменной
 
@@ -278,7 +278,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте класс com.tcs.edu.decorator.TimestampMessageDecorator
+- [ ] В sourcepath (src/main/java) откройте класс TimestampMessageDecorator
 - [ ] Добавьте глобальную (static) переменную messageCount
 - [ ] В методе вывода увеличивайте этот счетчик (оператор '++')
 - [ ] При формировании итоговой строки обогащенного сообщения вначале добавляйте значение этого счетчика
@@ -318,7 +318,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте метод decorate() класс com.tcs.edu.decorator.TimestampMessageDecorator
+- [ ] В sourcepath (src/main/java) откройте метод decorate() класс TimestampMessageDecorator
 - [ ] Измените объявление поясняющей переменной decoratedMessage: вместо явного объявления типа переменной используйте var
 
 Как проверить
@@ -347,7 +347,7 @@ Hello World!
 
 Задачи
 ------
-- [ ] В sourcepath (src/main/java) откройте метод decorate() класс com.tcs.edu.decorator.TimestampMessageDecorator
+- [ ] В sourcepath (src/main/java) откройте метод decorate() класс TimestampMessageDecorator
 - [ ] Измените объявление поясняющей переменной decoratedMessage: добавьте модификатор final
 
 Как проверить
