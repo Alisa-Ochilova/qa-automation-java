@@ -6,8 +6,10 @@ import static com.tcs.edu.decorator.TimestampMessageDecorator.decorator;
 import static com.tcs.edu.printer.ConsolePrinter.print;
 
 public class MessageService {
-    public static void process(Severity level,  String... messages){
-        for (String current : messages)
-         print(decorator(current) + " " + mapToString(level) + pageSizeDecorator());
+    public static void process(Severity level, String message, String... messages){
+        print(decorator(message) + " " + mapToString(level) + pageSizeDecorator());
+        for (String current : messages) {
+            print(decorator(current) + " " + mapToString(level) + pageSizeDecorator());
+        }
     }
 }
