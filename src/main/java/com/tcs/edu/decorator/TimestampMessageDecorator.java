@@ -1,23 +1,21 @@
 package com.tcs.edu.decorator;
 
-import java.time.Instant;
 import static java.lang.String.format;
 
+import java.time.Instant;
+
 public class TimestampMessageDecorator {
-
-    private static int messageCount;
-
     private static final int PAGE_SIZE = 2;
+    public static int messageCount;
 
-    public static String decorator(String message){
+    public static String decorator(String message) {
+        ++messageCount;
 
-        if (++messageCount % PAGE_SIZE == 0 ) {
-            final String decoratedMessage = format("%d %s %s %n---",messageCount,  Instant.now().toString(), message);
-            return decoratedMessage;
-        }
-        else {
-            final String decoratedMessage = format("%d %s %s",messageCount,  Instant.now().toString(), message);
-            return decoratedMessage;
+        if (messageCount % PAGE_SIZE == 0) {
+            return format("%d %s %s %n---", messageCount, Instant.now(), message);
+        } else {
+            return format("%d %s %s", messageCount, Instant.now(), message);
         }
     }
+
 }
