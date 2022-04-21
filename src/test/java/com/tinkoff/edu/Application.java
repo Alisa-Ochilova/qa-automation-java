@@ -14,6 +14,5 @@ class Application {
         process(REGULAR, "Hello world!");
         process(MAJOR, "Hello world!");
         process(null, null,null);
-       process(null, "Hello world!",null);
     }
 }
