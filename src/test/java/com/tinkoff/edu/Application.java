@@ -10,7 +10,7 @@ class Application {
         process(MINOR, "Hello world!", "Hello world!");
         process(REGULAR, "Hello world!");
         process(MAJOR, "Hello world!", "Hello world!","Hello world!");
-        process(MINOR, DESC, DISTINCT, "Hello world 1!","fgdfgfdgdf", "fgdfgfdgdf");
+        process(MINOR, DESC, DOUBLES, "Hello world 1!","fgdfgfdgdf", "fgdfgfdgdf");
         process(REGULAR, "Hello world!");
         process(MAJOR, "Hello world!");
         process(null, null,null);
