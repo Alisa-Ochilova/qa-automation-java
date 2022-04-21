@@ -17,5 +17,4 @@ public class TimestampMessageDecorator {
             return format("%d %s %s", messageCount, Instant.now(), message);
         }
     }
-
 }

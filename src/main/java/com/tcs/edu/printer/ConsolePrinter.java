@@ -1,5 +1,7 @@
 package com.tcs.edu.printer;
 
+import com.tcs.edu.enams.Severity;
+
 /**
  * Класс используется для реализации метода вывода данных
  * Реализация метода вывода данных
@@ -9,7 +11,7 @@ package com.tcs.edu.printer;
  */
 
 public class ConsolePrinter {
-    public static void print(String message) {
+    public static void print(String message, Severity level) {
         System.out.println(message);
     }
 }

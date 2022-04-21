@@ -1,6 +1,6 @@
 package com.tcs.edu.decorator;
 
-import com.tcs.edu.Severity;
+import com.tcs.edu.enams.Severity;
 
 public class SeverityDecorator {
     public static String mapToString(Severity severity){
