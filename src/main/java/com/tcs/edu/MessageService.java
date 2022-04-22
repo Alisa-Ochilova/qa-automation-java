@@ -13,33 +13,33 @@ import static com.tcs.edu.enams.Doubling.*;
 
 public class MessageService {
 
-    public static void process(Severity level, String message, String... messages) {
-        /**
-         * Проверка входных параметровров на null
-         */
+    /**
+     * Проверка входных параметровров на null
+     */
 
-        if (message != null && level != null){
+    public static void process(Severity level, String message, String... messages) {
+
+        if (message != null && level != null) {
             print(decorator(message + mapToString(level)), level);
             for (String current : messages) {
                 print(decorator(current + mapToString(level)), level);
             }
         }
     }
-     /**
+
+    /**
      * Перегруженный метод, определяющий порядок вывода сообщений для последовательности строковых параметров vararg
      */
 
-    public static void process(Severity level, MessageOrder order, String message, String... messages){
+    public static void process(Severity level, MessageOrder order, String message, String... messages) {
 
         if (order == DESC) {
 
-           for (int current = messages.length - 1; current >= 0; current--) {
-               print(decorator(messages[current] + mapToString(level)), level);
-                }
+            for (int current = messages.length - 1; current >= 0; current--) {
+                print(decorator(messages[current] + mapToString(level)), level);
+            }
             print(decorator(message + mapToString(level)), level);
-           }
-
-           else if (order == ASC) {
+        } else if (order == ASC) {
             print(decorator(message + mapToString(level)), level);
 
             for (String current : messages) {
@@ -52,7 +52,7 @@ public class MessageService {
      * Перегруженный метод, определяющий характер дублирования значений сообщений последовательности строковых параметров
      */
 
-    public static void process(Severity level, MessageOrder order, Doubling doubling, String message, String... messages){
+    public static void process(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
 
         String[] sortingDoublingMessages = new String[messages.length + 1];
 
@@ -82,9 +82,7 @@ public class MessageService {
                     }
                 }
             }
-        }
-
-        else if (doubling == DOUBLES) {
+        } else if (doubling == DOUBLES) {
             MessageService.process(level, order, message, messages);
         }
     }

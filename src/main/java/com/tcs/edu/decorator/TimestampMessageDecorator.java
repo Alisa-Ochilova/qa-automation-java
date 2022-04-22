@@ -1,7 +1,6 @@
 package com.tcs.edu.decorator;
 
 import static java.lang.String.format;
-
 import java.time.Instant;
 
 public class TimestampMessageDecorator {

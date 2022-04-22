@@ -3,9 +3,9 @@ package com.tcs.edu.decorator;
 import com.tcs.edu.enams.Severity;
 
 public class SeverityDecorator {
-    public static String mapToString(Severity severity){
+    public static String mapToString(Severity severity) {
         String severityString;
-        switch (severity){
+        switch (severity) {
             case MINOR:
                 severityString = " ()";
                 break;

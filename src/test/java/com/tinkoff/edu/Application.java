@@ -9,10 +9,10 @@ class Application {
     public static void main(String[] args) {
         process(MINOR, "Hello world!", "Hello world!");
         process(REGULAR, "Hello world!");
-        process(MAJOR, "Hello world!", "Hello world!","Hello world!");
-        process(MINOR, DESC, DOUBLES, "Hello world 1!","fgdfgfdgdf", "fgdfgfdgdf");
+        process(MAJOR, "Hello world!", "Hello world!", "Hello world!");
+        process(MINOR, DESC, DOUBLES, "Hello world 1!", "fgdfgfdgdf", "fgdfgfdgdf");
         process(REGULAR, "Hello world!");
         process(MAJOR, "Hello world!");
-        process(null, null,null);
+        process(null, null, null);
     }
 }
