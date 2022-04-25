@@ -1,4 +1,4 @@
-package com.tcs.edu.enams;
+package com.tcs.edu.enums;
 
 public enum MessageOrder {
     ASC,

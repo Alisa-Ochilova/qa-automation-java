@@ -1,6 +1,6 @@
 package com.tcs.edu.printer;
 
-import com.tcs.edu.enams.Severity;
+import com.tcs.edu.enums.Severity;
 
 /**
  * Класс используется для реализации метода вывода данных

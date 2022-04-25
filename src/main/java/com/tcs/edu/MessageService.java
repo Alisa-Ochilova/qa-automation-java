@@ -1,15 +1,15 @@
 package com.tcs.edu;
 
-import com.tcs.edu.enams.Doubling;
-import com.tcs.edu.enams.MessageOrder;
-import com.tcs.edu.enams.Severity;
+import com.tcs.edu.enums.Doubling;
+import com.tcs.edu.enums.MessageOrder;
+import com.tcs.edu.enums.Severity;
 
 import static com.tcs.edu.decorator.SeverityDecorator.mapToString;
 import static com.tcs.edu.decorator.TimestampMessageDecorator.decorator;
 import static com.tcs.edu.decorator.DoubleCheck.*;
 import static com.tcs.edu.printer.ConsolePrinter.print;
-import static com.tcs.edu.enams.MessageOrder.*;
-import static com.tcs.edu.enams.Doubling.*;
+import static com.tcs.edu.enums.MessageOrder.*;
+import static com.tcs.edu.enums.Doubling.*;
 
 public class MessageService {
 
@@ -19,13 +19,18 @@ public class MessageService {
 
     public static void process(Severity level, String message, String... messages) {
 
-        if (message != null && level != null) {
-            print(decorator(message + mapToString(level)), level);
-            for (String current : messages) {
-                print(decorator(current + mapToString(level)), level);
+        if (level != null) {
+            if (message != null) {
+                print(decorator(message + mapToString(level)), level);
+            }
+            if (messages != null) {
+                for (String current : messages) {
+                    print(decorator(current + mapToString(level)), level);
+                }
             }
         }
     }
+
 
     /**
      * Перегруженный метод, определяющий порядок вывода сообщений для последовательности строковых параметров vararg
@@ -34,18 +39,17 @@ public class MessageService {
     public static void process(Severity level, MessageOrder order, String message, String... messages) {
 
         if (order == DESC) {
-
-            for (int current = messages.length - 1; current >= 0; current--) {
-                print(decorator(messages[current] + mapToString(level)), level);
+            if (level != null) {
+                if (messages != null) {
+                    for (int current = messages.length - 1; current >= 0; current--) {
+                        print(decorator(messages[current] + mapToString(level)), level);
+                    }
+                }
+                if (message != null) {
+                    print(decorator(message + mapToString(level)), level);
+                }
             }
-            print(decorator(message + mapToString(level)), level);
-        } else if (order == ASC) {
-            print(decorator(message + mapToString(level)), level);
-
-            for (String current : messages) {
-                print(decorator(current + mapToString(level)), level);
-            }
-        }
+        } else if (order == ASC) MessageService.process(level, message, messages);
     }
 
     /**
