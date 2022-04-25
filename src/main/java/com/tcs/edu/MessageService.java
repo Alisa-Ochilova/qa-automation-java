@@ -57,37 +57,49 @@ public class MessageService {
      */
 
     public static void process(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
-
         String[] sortingDoublingMessages = new String[messages.length + 1];
 
         if (doubling == DISTINCT) {
             if (order == DESC) {
+                if (level != null) {
+                    if (messages != null) {
 
-                for (int current = messages.length - 1; current >= 0; current--) {
-                    if (!hasDuplicate(messages[current], sortingDoublingMessages)) {
-                        print(decorator(messages[current] + mapToString(level)), level);
-                        sortingDoublingMessages[current] = messages[current];
+                        for (int current = messages.length - 1; current >= 0; current--) {
+                            if (!hasDuplicate(messages[current], sortingDoublingMessages)) {
+                                print(decorator(messages[current] + mapToString(level)), level);
+                                sortingDoublingMessages[current] = messages[current];
+                            }
+                        }
                     }
-                }
+                    if (message != null) {
 
-                if (!hasDuplicate(message, sortingDoublingMessages)) {
-                    print(decorator(message + mapToString(level)), level);
+                        if (!hasDuplicate(message, sortingDoublingMessages)) {
+                            print(decorator(message + mapToString(level)), level);
+                        }
+                    }
                 }
             }
 
             if (order == ASC) {
-                print(decorator(message + mapToString(level)), level);
+                if (level != null) {
+                    if (message != null) {
+                        print(decorator(message + mapToString(level)), level);
+                    }
 
-                sortingDoublingMessages[messages.length] = message;
-                for (int current = 0; current <= messages.length - 1; current++) {
-                    if (!hasDuplicate(messages[current], sortingDoublingMessages)) {
-                        print(decorator(messages[current] + mapToString(level)), level);
-                        sortingDoublingMessages[current] = messages[current];
+                    if (messages != null) {
+
+                        sortingDoublingMessages[messages.length] = message;
+                        for (int current = 0; current <= messages.length - 1; current++) {
+                            if (!hasDuplicate(messages[current], sortingDoublingMessages)) {
+                                print(decorator(messages[current] + mapToString(level)), level);
+                                sortingDoublingMessages[current] = messages[current];
+                            }
+                        }
                     }
                 }
+            } else if (doubling == DOUBLES) {
+                MessageService.process(level, order, message, messages);
             }
-        } else if (doubling == DOUBLES) {
-            MessageService.process(level, order, message, messages);
         }
     }
 }
