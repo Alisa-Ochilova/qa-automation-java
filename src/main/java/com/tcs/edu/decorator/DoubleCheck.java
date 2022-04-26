@@ -1,15 +1,14 @@
 package com.tcs.edu.decorator;
 
-import java.util.Objects;
+import java.util.HashSet;
+import static java.util.Arrays.asList;
 
 public class DoubleCheck {
 
-    public static boolean hasDuplicate(String message, String... check) {
-        for (String checkMessage : check) {
-            if (Objects.equals(message, checkMessage)) {
-                return true;
-            }
-        }
-        return false;
+    public static String[] getArrayWithoutDoubles(String[] array) {
+        var s = new HashSet<>(asList(array));
+        return s.toArray(String[]::new);
+
     }
 }
+
