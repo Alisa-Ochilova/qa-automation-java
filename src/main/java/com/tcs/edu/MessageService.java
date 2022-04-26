@@ -62,14 +62,14 @@ public class MessageService {
     public static void process(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
         if (doubling == null) return;
         if (doubling == DISTINCT) {
-            var array = new String[messages.length + 1];
-            array[0] = message;
+            var messageRevert = new String[messages.length + 1];
+            messageRevert[0] = message;
 
             for (int current = 0; current < messages.length; current++) {
-                array[1 + current] = messages[current];
+                messageRevert[1 + current] = messages[current];
 
             }
-            process(level, order, null, getArrayWithoutDoubles(array));
+            process(level, order, null, getArrayWithoutDoubles(messageRevert));
 
 
         } else if (doubling == DOUBLES) {
