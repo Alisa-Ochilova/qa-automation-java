@@ -1,7 +1,6 @@
 package com.tcs.edu.decorator;
 
 import static java.lang.String.format;
-
 import java.time.Instant;
 
 public class TimestampMessageDecorator {
@@ -17,5 +16,4 @@ public class TimestampMessageDecorator {
             return format("%d %s %s", messageCount, Instant.now(), message);
         }
     }
-
 }
