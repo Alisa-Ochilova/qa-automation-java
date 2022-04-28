@@ -4,6 +4,7 @@ import com.tcs.edu.enums.Severity;
 
 import static com.tcs.edu.decorator.SeverityDecorator.mapToString;
 import static java.lang.String.format;
+
 import java.time.Instant;
 
 public class TimestampMessageDecorator {

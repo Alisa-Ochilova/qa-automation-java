@@ -1,7 +1,6 @@
 package com.tcs.edu.decorator;
 
 import java.util.LinkedHashSet;
-
 import static java.util.Arrays.asList;
 
 public class DoubleCheck {

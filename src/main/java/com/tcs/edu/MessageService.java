@@ -21,7 +21,7 @@ public class MessageService {
 
         for (String current : message.getBody()) {
             if (current != null) {
-                print(decorator(current , message.getLevel()));
+                print(decorator(current, message.getLevel()));
             }
         }
     }

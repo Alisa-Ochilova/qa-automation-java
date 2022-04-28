@@ -11,9 +11,9 @@ class Application {
     public static void main(String[] args) {
         Message message1 = new Message(MINOR, "Hello world!", "Hello world!");
         process(message1);
-        Message message2 = new Message(MINOR,  "Hello world 1!", "Hello world 2!");
-        process(DESC,message2);
-        Message message3 = new Message(MINOR,  "Hello world 1!", "Hello world 4!","Hello world 4!");
+        Message message2 = new Message(MINOR, "Hello world 1!", "Hello world 2!");
+        process(DESC, message2);
+        Message message3 = new Message(MINOR, "Hello world 1!", "Hello world 4!", "Hello world 4!");
         process(DESC, DISTINCT, message3);
 //        process(REGULAR, "Hello world!");
 //        process(MAJOR, "Hello world!", "Hello world!", "Hello world!");
