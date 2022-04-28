@@ -11,7 +11,7 @@ import com.tcs.edu.enums.Severity;
  */
 
 public class ConsolePrinter {
-    public static void print(String message, Severity level) {
+    public static void print(String message) {
         System.out.println(message);
     }
 }
