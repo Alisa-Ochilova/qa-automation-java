@@ -1,6 +1,8 @@
 package com.tcs.edu.printer;
 
-import com.tcs.edu.enums.Severity;
+import com.tcs.edu.domain.Printer;
+
+import java.util.Arrays;
 
 /**
  * Класс используется для реализации метода вывода данных
@@ -10,8 +12,9 @@ import com.tcs.edu.enums.Severity;
  * @author a.ochilova
  */
 
-public class ConsolePrinter {
-    public static void print(String message) {
+public class ConsolePrinter implements Printer {
+    @Override
+    public void print(String message) {
         System.out.println(message);
     }
 }

@@ -1,27 +1,31 @@
-package com.tcs.edu;
+package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
+import com.tcs.edu.domain.MessageDecorator;
+import com.tcs.edu.domain.MessageService;
+import com.tcs.edu.domain.Printer;
 import com.tcs.edu.enums.Doubling;
 import com.tcs.edu.enums.MessageOrder;
+import com.tcs.edu.printer.ConsolePrinter;
 
-import static com.tcs.edu.decorator.TimestampMessageDecorator.decorator;
 import static com.tcs.edu.decorator.DoubleCheck.*;
-import static com.tcs.edu.printer.ConsolePrinter.print;
 import static com.tcs.edu.enums.MessageOrder.*;
 import static com.tcs.edu.enums.Doubling.*;
 
-public class MessageService {
+public class OrderedDistinctedMessageService implements MessageService {
 
     /**
      * Проверка входных параметровров на null
      */
 
-    public static void process(Message message) {
+    public void process(Message message) {
+        Printer printer = new ConsolePrinter();
+        MessageDecorator messageDecorator = new TimestampMessageDecorator();
         if (message.getLevel() == null) return;
 
         for (String current : message.getBody()) {
             if (current != null) {
-                print(decorator(current, message.getLevel()));
+                printer.print(messageDecorator.decorate(message));
             }
         }
     }
@@ -31,7 +35,7 @@ public class MessageService {
      * Перегруженный метод, определяющий порядок вывода сообщений для последовательности строковых параметров vararg
      */
 
-    public static void process(MessageOrder order, Message message) {
+    public void process(MessageOrder order, Message message) {
         if (order == null) return;
 
         if (order == DESC) {
@@ -52,7 +56,7 @@ public class MessageService {
      * Перегруженный метод, определяющий характер дублирования значений сообщений последовательности строковых параметров
      */
 
-    public static void process(MessageOrder order, Doubling doubling, Message message) {
+    public void process(MessageOrder order, Doubling doubling, Message message) {
         if (doubling == null) return;
         if (doubling == DISTINCT) {
             var messageRevert = new String[message.getBody().length];
@@ -64,11 +68,11 @@ public class MessageService {
 
             }
             message.setBody(getArrayWithoutDoubles(messageRevert));
-            process(message);
+            process(order, message);
 
 
         } else if (doubling == DOUBLES) {
-            process(message);
+            process(order, message);
         }
     }
 }
