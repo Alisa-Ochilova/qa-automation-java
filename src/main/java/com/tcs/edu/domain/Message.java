@@ -6,7 +6,7 @@ public class Message {
     private Severity level;
     private String[] body;
 
-    public Message(Severity level, String body) {
+    public Message(Severity level, String... body) {
         this.level = level;
         this.body = body;
     }
@@ -23,11 +23,11 @@ public class Message {
         return level;
     }
 
-    public String getBody() {
+    public String[] getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(String[] body) {
         this.body = body;
     }
 }
