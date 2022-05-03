@@ -1,5 +1,8 @@
 package com.tcs.edu.printer;
 
+
+
+import com.tcs.edu.domain.Message;
 import com.tcs.edu.domain.Printer;
 
 import java.util.Arrays;
@@ -14,7 +17,12 @@ import java.util.Arrays;
 
 public class ConsolePrinter implements Printer {
     @Override
-    public void print(String message) {
-        System.out.println(message);
+    public void print(Message message) {
+        for (String current : message.getBody()) {
+            if (current != null) {
+                System.out.println(current);
+            }
+
+        }
     }
 }

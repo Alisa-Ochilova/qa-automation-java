@@ -23,11 +23,9 @@ public class OrderedDistinctedMessageService implements MessageService {
         MessageDecorator messageDecorator = new TimestampMessageDecorator();
         if (message.getLevel() == null) return;
 
-        for (String current : message.getBody()) {
-            if (current != null) {
+
                 printer.print(messageDecorator.decorate(message));
-            }
-        }
+
     }
 
 

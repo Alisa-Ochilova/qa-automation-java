@@ -1,5 +1,5 @@
 package com.tcs.edu.domain;
 
 public interface Printer {
-    void print (String message);
+    void print (Message message);
 }
