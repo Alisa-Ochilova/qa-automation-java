@@ -22,10 +22,8 @@ public class OrderedDistinctedMessageService implements MessageService {
         Printer printer = new ConsolePrinter();
         MessageDecorator messageDecorator = new TimestampMessageDecorator();
         if (message.getLevel() == null) return;
-
-
+        if (message.getBody() == null) return;
                 printer.print(messageDecorator.decorate(message));
-
     }
 
 
