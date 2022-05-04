@@ -13,18 +13,14 @@ public class TimestampMessageDecorator implements MessageDecorator {
     public static int messageCount;
 
     public Message decorate(Message message) {
+        ++messageCount;
 
-        String[] newMessageArray = new String[message.getBody().length];
-
-        for (int current = 0; current < message.getBody().length; current++) {
-            ++messageCount;
-            if (messageCount % PAGE_SIZE == 0) {
-                newMessageArray[current] = format("%d %s %s %s  %n---", messageCount, Instant.now().toString(), message.getBody()[current], mapToString(message));
-            } else {
-                newMessageArray[current] = format("%d %s  %s %s", messageCount, Instant.now().toString(), message.getBody()[current], mapToString(message));
-            }
+        if (messageCount % PAGE_SIZE == 0) {
+            message.setBody(format("%d %s %s %s  %n---", messageCount, Instant.now().toString(), message.getBody(), mapToString(message)));
+            return message;
+        } else {
+            message.setBody(format("%d %s  %s %s", messageCount, Instant.now().toString(), message.getBody(), mapToString(message)));
+            return message;
         }
-        message.setBody(newMessageArray);
-        return message;
     }
 }

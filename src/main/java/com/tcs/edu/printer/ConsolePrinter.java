@@ -17,10 +17,10 @@ import java.util.Arrays;
 
 public class ConsolePrinter implements Printer {
     @Override
-    public void print(Message message) {
-        for (String current : message.getBody()) {
+    public void print(Message... messages) {
+        for (Message current : messages) {
             if (current != null) {
-                System.out.println(current);
+                System.out.println(current.getBody());
             }
 
         }

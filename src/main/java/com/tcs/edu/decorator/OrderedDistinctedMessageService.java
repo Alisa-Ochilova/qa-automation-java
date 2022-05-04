@@ -18,12 +18,15 @@ public class OrderedDistinctedMessageService implements MessageService {
      * Проверка входных параметровров на null
      */
 
-    public void process(Message message) {
+    public void process(Message... messages) {
         Printer printer = new ConsolePrinter();
         MessageDecorator messageDecorator = new TimestampMessageDecorator();
-        if (message.getLevel() == null) return;
-        if (message.getBody() == null) return;
-                printer.print(messageDecorator.decorate(message));
+
+        for (Message  current : messages) {
+            if (current != null) {
+                printer.print(messageDecorator.decorate(current));
+            }
+        }
     }
 
 
@@ -31,44 +34,37 @@ public class OrderedDistinctedMessageService implements MessageService {
      * Перегруженный метод, определяющий порядок вывода сообщений для последовательности строковых параметров vararg
      */
 
-    public void process(MessageOrder order, Message message) {
+    public void process(MessageOrder order, Message... messages) {
         if (order == null) return;
 
         if (order == DESC) {
 
-            var messageRevert = new String[message.getBody().length];
+            Message[] messageRevert = new Message[messages.length];;
             int index = 0;
 
-            for (int current = message.getBody().length - 1; current >= 0; current--) {
-                messageRevert[current] = message.getBody()[index];
+            for (int current = messages.length - 1; current >= 0; current--) {
+                messageRevert[current] = messages[index];
                 index++;
             }
-            message.setBody(messageRevert);
-            process(message);
-        } else if (order == ASC) process(message);
+            messages = messageRevert;
+            process(messages);
+        } else if (order == ASC) process(messages);
     }
 
     /**
      * Перегруженный метод, определяющий характер дублирования значений сообщений последовательности строковых параметров
      */
 
-    public void process(MessageOrder order, Doubling doubling, Message message) {
+    public void process(MessageOrder order, Doubling doubling, Message... messages) {
         if (doubling == null) return;
         if (doubling == DISTINCT) {
-            var messageRevert = new String[message.getBody().length];
-            int index = 0;
 
-            for (int current = 0; current < message.getBody().length; current++) {
-                messageRevert[current] = message.getBody()[index];
-                index++;
-
-            }
-            message.setBody(getArrayWithoutDoubles(messageRevert));
-            process(order, message);
+            messages = getArrayWithoutDoubles(messages);
+            process(order, messages);
 
 
         } else if (doubling == DOUBLES) {
-            process(order, message);
+            process(order, messages);
         }
     }
 }
