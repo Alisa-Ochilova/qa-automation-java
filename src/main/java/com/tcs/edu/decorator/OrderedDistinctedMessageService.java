@@ -6,7 +6,7 @@ import com.tcs.edu.domain.MessageService;
 import com.tcs.edu.domain.Printer;
 import com.tcs.edu.enums.Doubling;
 import com.tcs.edu.enums.MessageOrder;
-import com.tcs.edu.printer.ConsolePrinter;
+
 
 import static com.tcs.edu.decorator.DoubleCheck.*;
 import static com.tcs.edu.enums.MessageOrder.*;
@@ -14,8 +14,18 @@ import static com.tcs.edu.enums.Doubling.*;
 
 public class OrderedDistinctedMessageService implements MessageService {
 
-    Printer printer = new ConsolePrinter();
-    MessageDecorator messageDecorator = new TimestampMessageDecorator();
+    private Printer printer;
+    private MessageDecorator messageDecorator;
+
+    /**
+     *
+     * Конструктор, принимающий параметры принтера и декоратора
+     *
+     */
+    public OrderedDistinctedMessageService(Printer printer, MessageDecorator messageDecorator) {
+        this.printer = printer;
+        this.messageDecorator = messageDecorator;
+    }
 
     /**
      * Проверка входных параметровров на null
