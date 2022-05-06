@@ -4,7 +4,9 @@ import com.tcs.edu.enums.Doubling;
 import com.tcs.edu.enums.MessageOrder;
 
 public interface MessageService {
-    void process(MessageOrder order, Doubling doubling, Message... messages);
-    void process(MessageOrder order,  Message... messages);
-    void process(Message... messages);
+    void process(MessageOrder order, Doubling doubling, Message message, Message... messages);
+
+    void process(MessageOrder order, Message message, Message... messages);
+
+    void process(Message message, Message... messages);
 }

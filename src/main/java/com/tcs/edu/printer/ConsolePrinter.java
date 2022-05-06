@@ -17,12 +17,7 @@ import java.util.Arrays;
 
 public class ConsolePrinter implements Printer {
     @Override
-    public void print(Message... messages) {
-        for (Message current : messages) {
-            if (current != null) {
-                System.out.println(current.getBody());
+    public void print(Message message) {
+                System.out.println(message.getBody());
             }
-
-        }
-    }
 }

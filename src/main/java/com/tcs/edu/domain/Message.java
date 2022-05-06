@@ -11,11 +11,6 @@ public class Message {
         this.body = body;
     }
 
-
-    /**
-     * На занятии зашили дефолтное значение в конструктора
-     */
-
     public Severity getLevel() {
         return level;
     }
@@ -28,4 +23,18 @@ public class Message {
         this.body = body;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Message otherMessage = (Message) obj;
+        return body.equals(otherMessage.body) && level == otherMessage.level;
+    }
+
+    @Override
+    public int hashCode() {
+        return body != null ? body.hashCode() : 0;
+    }
 }

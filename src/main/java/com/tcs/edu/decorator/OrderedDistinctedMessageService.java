@@ -14,57 +14,56 @@ import static com.tcs.edu.enums.Doubling.*;
 
 public class OrderedDistinctedMessageService implements MessageService {
 
+    Printer printer = new ConsolePrinter();
+    MessageDecorator messageDecorator = new TimestampMessageDecorator();
+
     /**
      * Проверка входных параметровров на null
      */
 
-    public void process(Message... messages) {
-        Printer printer = new ConsolePrinter();
-        MessageDecorator messageDecorator = new TimestampMessageDecorator();
+    public void process(Message message, Message... messages) {
 
-        for (Message  current : messages) {
-            if (current != null) {
-                printer.print(messageDecorator.decorate(current));
+        if (message.getLevel() == null) return;
+
+        if (message.getBody() != null) {
+            printer.print(messageDecorator.decorate(message));
+
+            for (Message current : messages) {
+                if (current != null) {
+                    printer.print(messageDecorator.decorate(current));
+                }
             }
         }
     }
-
 
     /**
      * Перегруженный метод, определяющий порядок вывода сообщений для последовательности строковых параметров vararg
      */
 
-    public void process(MessageOrder order, Message... messages) {
+    public void process(MessageOrder order, Message message, Message... messages) {
         if (order == null) return;
 
         if (order == DESC) {
 
-            Message[] messageRevert = new Message[messages.length];;
-            int index = 0;
-
             for (int current = messages.length - 1; current >= 0; current--) {
-                messageRevert[current] = messages[index];
-                index++;
+                printer.print(messageDecorator.decorate(messages[current]));
             }
-            messages = messageRevert;
-            process(messages);
-        } else if (order == ASC) process(messages);
+            printer.print(messageDecorator.decorate(message));
+
+        } else if (order == ASC) process(message, messages);
     }
 
     /**
      * Перегруженный метод, определяющий характер дублирования значений сообщений последовательности строковых параметров
      */
 
-    public void process(MessageOrder order, Doubling doubling, Message... messages) {
+    public void process(MessageOrder order, Doubling doubling, Message message, Message... messages) {
+
         if (doubling == null) return;
         if (doubling == DISTINCT) {
-
-            messages = getArrayWithoutDoubles(messages);
-            process(order, messages);
-
-
-        } else if (doubling == DOUBLES) {
-            process(order, messages);
-        }
+            process(order, message, getArrayWithoutDoubles(messages));
+            } else if (doubling == DOUBLES) {
+                process(order, message, messages);
+            }
     }
 }
