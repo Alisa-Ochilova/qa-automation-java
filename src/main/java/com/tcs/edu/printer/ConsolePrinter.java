@@ -1,6 +1,11 @@
 package com.tcs.edu.printer;
 
-import com.tcs.edu.enums.Severity;
+
+
+import com.tcs.edu.domain.Message;
+import com.tcs.edu.domain.Printer;
+
+import java.util.Arrays;
 
 /**
  * Класс используется для реализации метода вывода данных
@@ -10,8 +15,9 @@ import com.tcs.edu.enums.Severity;
  * @author a.ochilova
  */
 
-public class ConsolePrinter {
-    public static void print(String message, Severity level) {
-        System.out.println(message);
-    }
+public class ConsolePrinter implements Printer {
+    @Override
+    public void print(Message message) {
+                System.out.println(message.getBody());
+            }
 }
