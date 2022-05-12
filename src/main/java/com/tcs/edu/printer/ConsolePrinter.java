@@ -18,6 +18,6 @@ import java.util.Arrays;
 public class ConsolePrinter implements Printer {
     @Override
     public void print(Message message) {
-                System.out.println(message.getBody());
-            }
+        System.out.println(message.getBody());
+    }
 }

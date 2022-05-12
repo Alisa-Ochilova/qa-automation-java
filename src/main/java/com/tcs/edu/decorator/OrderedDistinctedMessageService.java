@@ -12,15 +12,13 @@ import static com.tcs.edu.decorator.DoubleCheck.*;
 import static com.tcs.edu.enums.MessageOrder.*;
 import static com.tcs.edu.enums.Doubling.*;
 
-public class OrderedDistinctedMessageService implements MessageService {
+public class OrderedDistinctedMessageService extends ValidatedService implements MessageService {
 
     private Printer printer;
     private MessageDecorator messageDecorator;
 
     /**
-     *
      * Конструктор, принимающий параметры принтера и декоратора
-     *
      */
     public OrderedDistinctedMessageService(Printer printer, MessageDecorator messageDecorator) {
         this.printer = printer;
@@ -32,17 +30,14 @@ public class OrderedDistinctedMessageService implements MessageService {
      */
 
     public void process(Message message, Message... messages) {
+        if (super.isArgsValid(message)) {
+            return;
+        }
 
-        if (message.getLevel() == null) return;
+        printer.print(messageDecorator.decorate(message));
 
-        if (message.getBody() != null) {
-            printer.print(messageDecorator.decorate(message));
-
-            for (Message current : messages) {
-                if (current != null) {
-                    printer.print(messageDecorator.decorate(current));
-                }
-            }
+        for (Message current : messages) {
+            printer.print(messageDecorator.decorate(current));
         }
     }
 
@@ -52,6 +47,10 @@ public class OrderedDistinctedMessageService implements MessageService {
 
     public void process(MessageOrder order, Message message, Message... messages) {
         if (order == null) return;
+
+        if (!super.isArgsValid(message)) {
+            return;
+        }
 
         if (order == DESC) {
 
@@ -68,12 +67,16 @@ public class OrderedDistinctedMessageService implements MessageService {
      */
 
     public void process(MessageOrder order, Doubling doubling, Message message, Message... messages) {
-
         if (doubling == null) return;
+
+        if (!super.isArgsValid(message)) {
+            return;
+        }
+
         if (doubling == DISTINCT) {
             process(order, message, getArrayWithoutDoubles(messages));
-            } else if (doubling == DOUBLES) {
-                process(order, message, messages);
-            }
+        } else if (doubling == DOUBLES) {
+            process(order, message, messages);
+        }
     }
 }
