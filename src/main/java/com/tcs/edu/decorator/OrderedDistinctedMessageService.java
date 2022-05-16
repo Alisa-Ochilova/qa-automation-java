@@ -30,7 +30,7 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      */
 
     public void process(Message message, Message... messages) {
-        if (super.isArgsValid(message)) {
+        if (!super.isArgsValid(message)) {
             return;
         }
 
@@ -46,9 +46,8 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      */
 
     public void process(MessageOrder order, Message message, Message... messages) {
-        if (order == null) return;
 
-        if (!super.isArgsValid(message)) {
+        if (!super.isArgsValid(order, message)) {
             return;
         }
 
@@ -67,9 +66,8 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      */
 
     public void process(MessageOrder order, Doubling doubling, Message message, Message... messages) {
-        if (doubling == null) return;
 
-        if (!super.isArgsValid(message)) {
+        if (!super.isArgsValid(order, doubling, message)) {
             return;
         }
 
