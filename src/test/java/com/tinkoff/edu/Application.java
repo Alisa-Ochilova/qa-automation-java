@@ -21,6 +21,7 @@ class Application {
         Message message3 = new Message(MAJOR,"Hello world 3!");
         Message message4 = new Message(MAJOR,"Hello world 3!");
         service.process(DESC, DISTINCT,  message1, message2, message3 ,message4);
+        service.process(null, DISTINCT, message2, message3 ,message4);
         service.process(DESC, message2, message3 ,message4);
         System.out.println(new Message(MINOR, "NewMessage"));
     }

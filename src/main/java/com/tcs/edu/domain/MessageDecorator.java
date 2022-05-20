@@ -1,5 +1,5 @@
 package com.tcs.edu.domain;
 
 public interface MessageDecorator {
-    Message decorate(Message message);
+    Message decorate(Message message) throws LogException;
 }

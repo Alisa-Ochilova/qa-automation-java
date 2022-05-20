@@ -2,6 +2,7 @@ package com.tcs.edu.printer;
 
 
 
+import com.tcs.edu.domain.LogException;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.domain.Printer;
 
@@ -17,7 +18,7 @@ import java.util.Arrays;
 
 public class ConsolePrinter implements Printer {
     @Override
-    public void print(Message message) {
+    public void print(Message message) throws LogException {
         System.out.println(message.getBody());
     }
 }
