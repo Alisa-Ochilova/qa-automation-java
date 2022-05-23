@@ -1,10 +1,10 @@
 package com.tcs.edu.decorator;
 
+import com.tcs.edu.domain.LogException;
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.enums.Severity;
 
 public class SeverityDecorator {
-    public static String mapToString(Message message) {
+    public static String mapToString(Message message) throws LogException {
         String severityString;
         switch (message.getLevel()) {
             case MINOR:

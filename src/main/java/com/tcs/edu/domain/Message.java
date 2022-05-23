@@ -37,4 +37,12 @@ public class Message {
     public int hashCode() {
         return body != null ? body.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "level=" + level +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }
