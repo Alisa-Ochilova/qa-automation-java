@@ -7,15 +7,15 @@ import com.tcs.edu.enums.MessageOrder;
 public abstract class ValidatedService {
     public void isArgsValid(MessageOrder order, Doubling doubling, Message message) {
         isArgsValid(order, message);
-        if(doubling == null) throw new IllegalArgumentException("Enter your doubling");
+        if(doubling == null) throw new IllegalArgumentException("Doubling cannot be null");
     }
     public void isArgsValid(MessageOrder order,  Message message) {
         isArgsValid(message);
-        if(order == null) throw new IllegalArgumentException("Enter your order");
+        if(order == null) throw new IllegalArgumentException("Order cannot be null");
     }
     public void isArgsValid(Message message) {
-        if(message.getBody() == null) throw new IllegalArgumentException("Enter your message");
-        if(message.getLevel() == null) throw new IllegalArgumentException("Enter your severity");
-        if(message == null) throw new IllegalArgumentException("Enter your message and severity");
+        if(message.getBody() == null) throw new IllegalArgumentException("Message body cannot be null");
+        if(message.getLevel() == null) throw new IllegalArgumentException("Severity cannot be null");
+        if(message == null) throw new IllegalArgumentException("Message and severity cannot be null");
     }
 }

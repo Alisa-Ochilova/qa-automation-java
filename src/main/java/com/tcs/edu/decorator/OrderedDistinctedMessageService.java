@@ -6,7 +6,6 @@ import com.tcs.edu.enums.MessageOrder;
 
 
 import static com.tcs.edu.decorator.DoubleCheck.*;
-import static com.tcs.edu.domain.LogException.NOT_VALID_ARG_MESSAGE;
 import static com.tcs.edu.enums.MessageOrder.*;
 import static com.tcs.edu.enums.Doubling.*;
 
@@ -36,7 +35,7 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
                 printer.print(messageDecorator.decorate(current));
             }
         } catch (IllegalArgumentException e) {
-            throw new LogException(NOT_VALID_ARG_MESSAGE, e);
+            throw new LogException(e.getMessage(), e);
         }
     }
 
@@ -57,7 +56,7 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
 
             } else if (order == ASC) process(message, messages);
         } catch (IllegalArgumentException e) {
-            throw new LogException(NOT_VALID_ARG_MESSAGE, e);
+            throw new LogException(e.getMessage(), e);
         }
     }
 
@@ -75,7 +74,8 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
                 process(order, message, messages);
             }
         } catch (IllegalArgumentException e) {
-            throw new LogException(NOT_VALID_ARG_MESSAGE, e);
+            throw new LogException(e.getMessage(), e);
         }
+
     }
 }
