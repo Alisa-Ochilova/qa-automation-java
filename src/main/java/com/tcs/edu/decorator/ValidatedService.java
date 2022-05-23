@@ -15,7 +15,7 @@ public abstract class ValidatedService {
     }
     public void isArgsValid(Message message) {
         if(message.getBody() == null) throw new IllegalArgumentException("Message body cannot be null");
-        if(message.getLevel() == null) throw new IllegalArgumentException("Severity cannot be null");
-        if(message == null) throw new IllegalArgumentException("Message and severity cannot be null");
+        if(message.getLevel() == null) throw new IllegalArgumentException("Message severity cannot be null");
+        if(message == null) throw new IllegalArgumentException("Message cannot be null");
     }
 }
