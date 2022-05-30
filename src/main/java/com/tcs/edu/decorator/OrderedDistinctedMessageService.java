@@ -3,7 +3,12 @@ package com.tcs.edu.decorator;
 import com.tcs.edu.domain.*;
 import com.tcs.edu.enums.Doubling;
 import com.tcs.edu.enums.MessageOrder;
+import com.tcs.edu.enums.Severity;
+import com.tcs.edu.repository.MessageRepository;
 
+
+import java.util.Collection;
+import java.util.UUID;
 
 import static com.tcs.edu.decorator.DoubleCheck.*;
 import static com.tcs.edu.enums.MessageOrder.*;
@@ -11,14 +16,14 @@ import static com.tcs.edu.enums.Doubling.*;
 
 public class OrderedDistinctedMessageService extends ValidatedService implements MessageService {
 
-    private Printer printer;
+    private MessageRepository repository;
     private MessageDecorator messageDecorator;
 
     /**
      * Конструктор, принимающий параметры принтера и декоратора
      */
-    public OrderedDistinctedMessageService(Printer printer, MessageDecorator messageDecorator) {
-        this.printer = printer;
+    public OrderedDistinctedMessageService(MessageRepository repository, MessageDecorator messageDecorator) {
+        this.repository = repository;
         this.messageDecorator = messageDecorator;
     }
 
@@ -29,10 +34,10 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
     public void process(Message message, Message... messages) throws LogException {
         try {
             super.isArgsValid(message);
-            printer.print(messageDecorator.decorate(message));
+            repository.create(messageDecorator.decorate(message));
 
             for (Message current : messages) {
-                printer.print(messageDecorator.decorate(current));
+                repository.create(messageDecorator.decorate(current));
             }
         } catch (IllegalArgumentException e) {
             throw new LogException(e.getMessage(), e);
@@ -50,9 +55,9 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
             if (order == DESC) {
 
                 for (int current = messages.length - 1; current >= 0; current--) {
-                    printer.print(messageDecorator.decorate(messages[current]));
+                    repository.create(messageDecorator.decorate(messages[current]));
                 }
-                printer.print(messageDecorator.decorate(message));
+                repository.create(messageDecorator.decorate(message));
 
             } else if (order == ASC) process(message, messages);
         } catch (IllegalArgumentException e) {
@@ -77,5 +82,20 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
             throw new LogException(e.getMessage(), e);
         }
 
+    }
+
+    @Override
+    public Message findByPrimaryKey(UUID key) {
+        return repository.findByPrimaryKey(key);
+    }
+
+    @Override
+    public Collection<Message> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Collection<Message> findBySeverity(Severity by) {
+        return repository.findBySeverity(by);
     }
 }
