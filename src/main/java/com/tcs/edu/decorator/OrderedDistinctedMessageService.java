@@ -19,6 +19,11 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
     private MessageRepository repository;
     private MessageDecorator messageDecorator;
 
+    public MessageRepository getRepository() {
+        return repository;
+    }
+
+
     /**
      * Конструктор, принимающий параметры принтера и декоратора
      */

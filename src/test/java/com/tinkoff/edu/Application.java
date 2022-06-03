@@ -4,9 +4,12 @@ import com.tcs.edu.decorator.OrderedDistinctedMessageService;
 import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.domain.MessageService;
+import com.tcs.edu.enums.Doubling;
+import com.tcs.edu.enums.MessageOrder;
 import com.tcs.edu.repository.HashMapMessageRepository;
 
-import static com.tcs.edu.enums.Severity.*;
+import static com.tcs.edu.enums.Severity.MAJOR;
+import static com.tcs.edu.enums.Severity.MINOR;
 
 class Application {
     public static void main(String[] args) {
@@ -19,10 +22,11 @@ class Application {
         Message message3 = new Message(MAJOR,"Hello world 3!");
         Message message4 = new Message(MAJOR,"Hello world 3!");
 
-//       service.process(DESC, DISTINCT,  message1, message2, message3 ,message4);
-//        service.process(null, DISTINCT, message2, message3 ,message4);
-//        service.process(DESC, message2, message3 ,message4);
-//        System.out.println(new Message(MINOR, "NewMessage"));
+        service.process(message1, message2, message3 ,message4);
+        service.process(MessageOrder.DESC, message2, message3 ,message4);
+        service.process(null, Doubling.DISTINCT, message2, message3 ,message4);
+        service.process(MessageOrder.DESC, Doubling.DISTINCT, message2, message3 ,message4);
+        System.out.println(new Message(MINOR, "NewMessage"));
         service.process(message3, message2);
         service.findByPrimaryKey(message2.getId());
         service.findAll();
