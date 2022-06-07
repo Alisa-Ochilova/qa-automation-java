@@ -1,15 +1,12 @@
 import com.tcs.edu.decorator.OrderedDistinctedMessageService;
 import com.tcs.edu.decorator.TimestampMessageDecorator;
-import com.tcs.edu.domain.LogException;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.domain.MessageService;
+import com.tcs.edu.domain.LogException;
 import com.tcs.edu.enums.Doubling;
 import com.tcs.edu.enums.MessageOrder;
 import com.tcs.edu.repository.HashMapMessageRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 
@@ -21,7 +18,6 @@ import static com.tcs.edu.enums.Severity.MAJOR;
 import static com.tcs.edu.enums.Severity.MINOR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class ApplicationTests {
@@ -100,35 +96,22 @@ public class ApplicationTests {
         @Test
         @DisplayName("Отсутсвует тело сообщение")
         public void checkNullBody() {
-            try {
-                service.process(message1, message2);
-                fail();
-            } catch (LogException e) {
-                assertThat(e.getMessage(), is("Message body cannot be null"));
-            }
+            LogException e = Assertions.assertThrows(LogException.class, () -> service.process(message1, message2));
+            assertThat(e.getMessage(), is("Message body cannot be null"));
         }
 
         @Test
         @DisplayName("Отсутсвует параметр порядка вывода")
         public void checkNullOrder() {
-            try {
-                service.process(null, Doubling.DISTINCT, message2, message3 ,message4);
-                fail();
-            } catch (LogException e) {
-                assertThat(e.getMessage(), is("Order cannot be null"));
-            }
+            LogException e = Assertions.assertThrows(LogException.class, () -> service.process(null, Doubling.DISTINCT, message2, message3, message4));
+            assertThat(e.getMessage(), is("Order cannot be null"));
         }
 
         @Test
         @DisplayName("Отсутсвует параметр проверки на дубли")
         public void checkNullDistinct() {
-            try {
-                service.process(MessageOrder.ASC, (Doubling) null, message2, message3 ,message4);
-                fail();
-            } catch (LogException e) {
-                assertThat(e.getMessage(), is("Doubling cannot be null"));
-            }
+            LogException e = Assertions.assertThrows(LogException.class, () -> service.process(MessageOrder.ASC, (Doubling) null, message2, message3, message4));
+            assertThat(e.getMessage(), is("Doubling cannot be null"));
         }
     }
-
 }

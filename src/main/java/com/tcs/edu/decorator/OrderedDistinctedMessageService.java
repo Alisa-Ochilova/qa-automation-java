@@ -53,7 +53,7 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      * Перегруженный метод, определяющий порядок вывода сообщений для последовательности строковых параметров vararg
      */
 
-    public void process(MessageOrder order, Message message, Message... messages) throws LogException{
+    public void process(MessageOrder order, Message message, Message... messages) throws LogException {
 
         try {
             super.isArgsValid(order, message);
@@ -74,7 +74,7 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      * Перегруженный метод, определяющий характер дублирования значений сообщений последовательности строковых параметров
      */
 
-    public void process(MessageOrder order, Doubling doubling, Message message, Message... messages) throws LogException{
+    public void process(MessageOrder order, Doubling doubling, Message message, Message... messages) throws LogException {
 
         try {
             super.isArgsValid(order, doubling, message);

@@ -6,8 +6,6 @@ import com.tcs.edu.domain.LogException;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.domain.Printer;
 
-import java.util.Arrays;
-
 /**
  * Класс используется для реализации метода вывода данных
  * Реализация метода вывода данных
