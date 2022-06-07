@@ -4,12 +4,12 @@ import com.tcs.edu.domain.Message;
 import com.tcs.edu.enums.Severity;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class HashMapMessageRepository implements MessageRepository {
-    private HashMap<UUID, Message> messages = new HashMap<>();
+    private LinkedHashMap<UUID, Message> messages = new LinkedHashMap<>();
 
     @Override
     public UUID create(Message message) {
@@ -34,6 +34,6 @@ public class HashMapMessageRepository implements MessageRepository {
         return messages.values()
                 .stream()
                 .filter(message -> message.getLevel() == by)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

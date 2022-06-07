@@ -12,7 +12,7 @@ public interface MessageService {
 
     void process(MessageOrder order, Message message, Message... messages) throws LogException;
 
-    void process(Message message, Message... messages) throws LogException ;
+    void process(Message message, Message... messages) throws LogException;
 
     Message findByPrimaryKey(UUID key);
 
