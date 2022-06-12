@@ -31,36 +31,6 @@
           </dependency>
         </dependencies>
       </plugin>
-
-      <plugin>
-        <groupId>io.swagger</groupId>
-        <artifactId>swagger-codegen-maven-plugin</artifactId>
-        <version>2.4.17</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <!--Ваша спецификация-->
-              <inputSpec>C:\Users\a.ochilova\IdeaProjects\qa-automation-java\app.codegen\build\api-generated-spec.json</inputSpec>
-              <output>${project.build.directory}/generated-sources/swagger</output>
-              <language>java</language>
-              <configOptions>
-                <dateLibrary>java11</dateLibrary>
-              </configOptions>
-              <library>rest-assured</library>
-              <!--Нужна ли генерация тестов-->
-              <generateApiTests>true</generateApiTests>
-              <generateApiDocumentation>false</generateApiDocumentation>
-              <generateModelDocumentation>false</generateModelDocumentation>
-              <apiPackage>${default.package}.api</apiPackage>
-              <modelPackage>C:\Users\a.ochilova\IdeaProjects\qa-automation-java\src\test\java\API\Dto\json.java</modelPackage>
-              <invokerPackage>C:\Users\a.ochilova\IdeaProjects\qa-automation-java\src\test\java\API\ApiDemoTest.java</invokerPackage>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
@@ -116,8 +86,5 @@
       <artifactId>jackson-annotations</artifactId>
       <version>2.13.2</version>
     </dependency>
-
-
-
   </dependencies>
 </project>
