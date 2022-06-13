@@ -3,21 +3,20 @@ package API;
 import io.restassured.RestAssured;
 import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Random;
+
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.*;
 
-public class ApiDemoTest {
-    String countryName = randomAlphabetic(2);
-
-    Random random = new Random();
-    int id = random.nextInt(1000);
-    String idString = String.valueOf(id);
-
+public class ApiDemoTest extends Country{
+    @BeforeEach
+    public void setUp() {
+        setCountryName(randomAlphabetic(2));
+    }
 
     @BeforeAll
     public static void setUpAuth() {
@@ -34,90 +33,90 @@ public class ApiDemoTest {
 
     @Test
     public void shouldCreateCountriesDb() {
-        given()
+        setId(given()
                 .contentType("application/json")
                 .body("{\n" +
-                        "  \"countryName\": \"" + countryName + "\"\n" +
+                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
                         "}")
                 .when()
                 .post("/api/countries")
                 .then()
                 .statusCode(201)
                 .body("id", not(empty()),
-                        "countryName", is(countryName),
+                        "countryName", is(getCountryName()),
                         "location", nullValue())
                 .extract()
                 .response()
-                .path(idString = "id");
-        when().delete("/api/countries/" + id);
+                .path("id"));
+        when().delete("/api/countries/" + getId());
     }
 
     @Test
     public void shouldGetCountry() {
-        id = given()
+        setId(given()
                 .body("{\n" +
-                        "  \"countryName\": \"" + countryName + "\"\n" +
+                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
                         "}")
                 .contentType("application/json")
                 .when()
                 .post("/api/countries")
                 .body()
-                .path("id");
+                .path("id"));
         when()
-                .get("/api/countries/" + id)
+                .get("/api/countries/" + getId())
                 .then()
                 .statusCode(200)
                 .body(
-                        "id", is(id),
-                        "countryName", is(countryName),
+                        "id", is(getId()),
+                        "countryName", is(getCountryName()),
                         "location", nullValue()
                 );
-        when().delete("/api/countries/" + id);
+        when().delete("/api/countries/" + getId());
     }
 
     @Test
     public void shouldDeleteCountry() {
-        id = given()
+        setId(given()
                 .body("{\n" +
-                        "  \"countryName\": \"" + countryName + "\"\n" +
+                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
                         "}")
                 .contentType("application/json")
                 .when()
                 .post("/api/countries")
                 .body()
-                .path("id");
+                .path("id"));
         when()
-                .delete("/api/countries/" + id)
+                .delete("/api/countries/" + getId())
                 .then()
                 .statusCode(204);
     }
 
     @Test
     public void shouldPatchCountry() {
-        id = given()
+        setId(given()
                 .body("{\n" +
-                        "  \"countryName\": \"" + countryName + "\"\n" +
+                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
                         "}")
                 .contentType("application/json")
                 .when()
                 .post("/api/countries")
                 .body()
-                .path("id");
+                .path("id"));
         given()
                 .contentType("application/json")
                 .body(
                         "{\n" +
-                                "  \"id\": \"" + id + "\"\n" +
+                                "  \"id\": \"" + getId() + "\"\n" +
                                 "," +
-                                "  \"countryName\": \"" + countryName + "\"\n" +
+                                "  \"countryName\": \"" + getCountryName() + "\"\n" +
                                 "}")
                 .when()
-                .patch("/api/countries/" + id)
+                .patch("/api/countries/" + getId())
                 .then()
                 .statusCode(200)
-                .body("id", is(id),
-                        "countryName", is(countryName),
+                .body("id", is(getId()),
+                        "countryName", is(getCountryName()),
                         "location", nullValue());
-        when().delete("/api/countries/" + id);
+        when().delete("/api/countries/" + getId());
     }
 }
