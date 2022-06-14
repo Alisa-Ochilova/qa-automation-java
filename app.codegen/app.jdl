@@ -25,7 +25,7 @@ entity Region {
 	regionName String unique required minlength(5) maxlength(20)
 }
 
-entity Country {
+entity API.Country {
 	countryName String unique required minlength(5) maxlength(20)
 }
 
@@ -74,8 +74,8 @@ enum Language {
 
 
 relationship OneToOne {
-	Country{region} to Region,
-	Location{country} to Country,
+	API.Country{region} to Region,
+	Location{country} to API.Country,
 	Department{location} to Location,
     JobHistory{job required} to Job,
     JobHistory{department required} to Department,
