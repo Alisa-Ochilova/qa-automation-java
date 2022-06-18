@@ -2,6 +2,8 @@ package API;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.ResultSet;
+
 public class Country {
     @SerializedName("countryName")
     protected   String countryName;

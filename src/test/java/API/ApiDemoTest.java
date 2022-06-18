@@ -2,20 +2,61 @@ package API;
 
 import io.restassured.RestAssured;
 import io.restassured.authentication.PreemptiveBasicAuthScheme;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ApiDemoTest extends Country{
+public class ApiDemoTest extends Country {
+
+    private static Connection connection;
+    Random random = new Random();
+
+    @BeforeAll
+    public static void connect() throws SQLException {
+        connection = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/app-db",
+                "app-db-admin",
+                "P@ssw0rd"
+        );
+    }
+
+    @AfterAll
+    public static void disconnect() throws SQLException, IOException {
+        connection.close();
+    }
+
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws SQLException{
         setCountryName(randomAlphabetic(2));
+        setId(random.nextInt(1000));
+
+        PreparedStatement sql = connection.prepareStatement(
+                "INSERT INTO country(id, country_name) VALUES(?, ?)"
+        );
+        sql.setInt(1, getId());
+        sql.setString(2, getCountryName());
+        sql.executeUpdate();
+    }
+
+    @AfterEach
+    public void setDown() throws SQLException {
+        PreparedStatement sql = connection.prepareStatement(
+                "DELETE FROM country WHERE country_name = ?"
+        );
+        sql.setString(1, getCountryName());
+        sql.executeUpdate();
     }
 
     @BeforeAll
@@ -31,37 +72,41 @@ public class ApiDemoTest extends Country{
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
+
     @Test
-    public void shouldCreateCountriesDb() {
-        setId(given()
+    public void shouldCreateCountriesDb() throws SQLException {
+        setDown();
+
+        given()
                 .contentType("application/json")
-                .body("{\n" +
-                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
-                        "}")
+                .body(
+                        "{\n" +
+                                "  \"id\": \"" + getId() + "\"\n" +
+                                "," +
+                                "  \"countryName\": \"" + getCountryName() + "\"\n" +
+                                "}")
                 .when()
                 .post("/api/countries")
                 .then()
                 .statusCode(201)
                 .body("id", not(empty()),
                         "countryName", is(getCountryName()),
-                        "location", nullValue())
-                .extract()
-                .response()
-                .path("id"));
-        when().delete("/api/countries/" + getId());
+                        "location", nullValue());
+
+        Collection<String> countryNames = new ArrayList<>();
+
+        Statement sql = connection.createStatement();
+        ResultSet resultSet = sql.executeQuery("SELECT * FROM country");
+        while (resultSet.next()) {
+            countryNames.add(resultSet.getString(2));
+        }
+        assertThat(countryNames, contains(getCountryName()));
+
     }
 
     @Test
-    public void shouldGetCountry() {
-        setId(given()
-                .body("{\n" +
-                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
-                        "}")
-                .contentType("application/json")
-                .when()
-                .post("/api/countries")
-                .body()
-                .path("id"));
+    public void shouldGetCountry() throws SQLException {
+        setUp();
         when()
                 .get("/api/countries/" + getId())
                 .then()
@@ -71,20 +116,10 @@ public class ApiDemoTest extends Country{
                         "countryName", is(getCountryName()),
                         "location", nullValue()
                 );
-        when().delete("/api/countries/" + getId());
     }
 
     @Test
-    public void shouldDeleteCountry() {
-        setId(given()
-                .body("{\n" +
-                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
-                        "}")
-                .contentType("application/json")
-                .when()
-                .post("/api/countries")
-                .body()
-                .path("id"));
+    public void shouldDeleteCountry() throws SQLException {
         when()
                 .delete("/api/countries/" + getId())
                 .then()
@@ -92,16 +127,7 @@ public class ApiDemoTest extends Country{
     }
 
     @Test
-    public void shouldPatchCountry() {
-        setId(given()
-                .body("{\n" +
-                        "  \"countryName\": \"" + getCountryName() + "\"\n" +
-                        "}")
-                .contentType("application/json")
-                .when()
-                .post("/api/countries")
-                .body()
-                .path("id"));
+    public void shouldPatchCountry() throws SQLException {
         given()
                 .contentType("application/json")
                 .body(
@@ -117,6 +143,5 @@ public class ApiDemoTest extends Country{
                 .body("id", is(getId()),
                         "countryName", is(getCountryName()),
                         "location", nullValue());
-        when().delete("/api/countries/" + getId());
     }
 }
