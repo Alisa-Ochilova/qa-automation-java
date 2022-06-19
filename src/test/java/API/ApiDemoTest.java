@@ -21,7 +21,6 @@ import static org.hamcrest.Matchers.*;
 public class ApiDemoTest extends Country {
 
     private static Connection connection;
-    Random random = new Random();
 
     @BeforeAll
     public static void connect() throws SQLException {
@@ -38,16 +37,20 @@ public class ApiDemoTest extends Country {
     }
 
     @BeforeEach
-    public void setUp() throws SQLException{
+    public void setUp() throws SQLException {
         setCountryName(randomAlphabetic(2));
-        setId(random.nextInt(1000));
+ //       setId(random.nextInt(1000));
 
         PreparedStatement sql = connection.prepareStatement(
-                "INSERT INTO country(id, country_name) VALUES(?, ?)"
+                "INSERT INTO country(country_name) VALUES( ?)",
+                Statement.RETURN_GENERATED_KEYS
         );
-        sql.setInt(1, getId());
-        sql.setString(2, getCountryName());
+        sql.setString(1, getCountryName());
         sql.executeUpdate();
+
+        ResultSet keys = sql.getGeneratedKeys();
+        assertThat(keys.next(), is(true));
+        setId(keys.getInt("id"));
     }
 
     @AfterEach
@@ -72,17 +75,13 @@ public class ApiDemoTest extends Country {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
-
     @Test
     public void shouldCreateCountriesDb() throws SQLException {
         setDown();
-
         given()
                 .contentType("application/json")
                 .body(
                         "{\n" +
-                                "  \"id\": \"" + getId() + "\"\n" +
-                                "," +
                                 "  \"countryName\": \"" + getCountryName() + "\"\n" +
                                 "}")
                 .when()
@@ -100,13 +99,11 @@ public class ApiDemoTest extends Country {
         while (resultSet.next()) {
             countryNames.add(resultSet.getString(2));
         }
-        assertThat(countryNames, contains(getCountryName()));
-
+        assertThat(countryNames, hasItem(getCountryName()));
     }
 
     @Test
-    public void shouldGetCountry() throws SQLException {
-        setUp();
+    public void shouldGetCountry() {
         when()
                 .get("/api/countries/" + getId())
                 .then()
@@ -119,7 +116,7 @@ public class ApiDemoTest extends Country {
     }
 
     @Test
-    public void shouldDeleteCountry() throws SQLException {
+    public void shouldDeleteCountry() {
         when()
                 .delete("/api/countries/" + getId())
                 .then()
@@ -127,7 +124,7 @@ public class ApiDemoTest extends Country {
     }
 
     @Test
-    public void shouldPatchCountry() throws SQLException {
+    public void shouldPatchCountry() {
         given()
                 .contentType("application/json")
                 .body(
